@@ -1,0 +1,152 @@
+<% layout("/layouts/boilerplate") -%>
+<link
+  href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+  rel="stylesheet"
+/>
+<style>
+  body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #f0f2f5;
+    font-family: Arial, sans-serif;
+  }
+
+  .form-container {
+    width: 90%;
+    max-width: 560px;
+    padding: 40px;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  }
+
+  .form-title {
+    font-size: 24px;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 20px;
+    text-align: center;
+  }
+
+  .form-group {
+    margin-bottom: 20px;
+  }
+
+  .form-group label {
+    font-size: 14px;
+    color: #555;
+    display: block;
+    margin-bottom: 8px;
+  }
+
+  .form-input {
+    width: 100%;
+    padding: 12px;
+    font-size: 14px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    transition: all 0.3s ease;
+  }
+
+  .form-input:focus {
+    border-color: #8a2be2;
+    box-shadow: 0 0 5px rgba(38, 132, 255, 0.5);
+    outline: none;
+  }
+
+  .submit-btn {
+    width: 100%;
+    padding: 12px;
+    font-size: 16px;
+    color: #fff;
+    background-color: rebeccapurple;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+
+  .submit-btn:hover {
+    background-color: #8a2be2;
+  }
+  .fixed-top {
+    padding: 0;
+  }
+
+  @media (max-width: 500px) {
+    .form-container {
+      padding: 20px;
+      position: relative;
+      bottom: 4rem;
+    }
+
+    .form-title {
+      font-size: 20px;
+    }
+
+    .submit-btn {
+      font-size: 14px;
+    }
+  }
+</style>
+
+<div class="form-container">
+  <h1 class="form-title">Register</h1>
+  <form action="/register" method="POST">
+    <div class="form-group">
+      <label for="username">Username</label>
+      <input
+        type="text"
+        name="username"
+        id="username"
+        required
+        class="form-input"
+      />
+    </div>
+    <div class="form-group">
+      <label for="email">Email</label>
+      <input type="email" name="email" id="email" required class="form-input" />
+    </div>
+    <div class="form-group">
+      <label for="password">Password</label>
+      <input
+        type="password"
+        name="password"
+        id="password"
+        required
+        class="form-input"
+      />
+    </div>
+    <div class="form-group">
+      <label for="email">Email</label>
+      <input
+        type="email"
+        name="email"
+        id="email"
+        required
+        class="form-input"
+        oninput="validateEmail()"
+      />
+      <span id="emailError" class="error-message">Invalid email format</span>
+    </div>
+    <!-- <div class="form-group">
+      <label for="role">Role:</label>
+      <select name="role" class="form-input" required>
+        <option value="user">User</option>
+        <option value="editor">Editor</option>
+        <option value="admin">Admin</option>
+      </select>
+    </div> -->
+    <div class="form-group">
+      already signup <a href="/login">login</a>
+    </div>
+    <br>
+    <button type="submit" class="submit-btn">Register</button>
+  </form>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.2/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>

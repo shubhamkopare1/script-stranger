@@ -1,0 +1,49 @@
+/* books.ejs  */
+
+/* // info ejs */
+
+/* login */
+body{
+    display: flex;
+    flex-direction: column;
+}
+.containers1{
+    display: flex;
+    flex-direction: column;
+}
+.collapse{
+    height: 4rem;
+ 
+}
+.navbar{
+    padding-top: 0;
+    padding: 0;
+    background-color: rebeccapurple;
+    border-bottom: 1px solid white;
+}
+body{
+   
+    color: white;
+}
+.btn{
+    background-color: rebeccapurple;
+    color: white;
+}
+.tt{
+    color: #57d8fa;
+ }
+ .g{
+    color: #28a1be;
+ }
+ .p{
+    color: yellow;
+ }
+ .c{
+    color: #fe5784;
+ }
+ .e{
+    color: #cc0e41;
+ }
+ .t{
+color: #73b66b;
+ }

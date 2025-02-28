@@ -1,0 +1,103 @@
+<% layout("/layouts/boilerplate") -%>
+<br />
+<br />
+<br />
+<br />
+
+<!-- Bootstrap CSS -->
+<link
+  href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+  rel="stylesheet"
+/>
+<style>
+  .body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    background-color: #f0f2f5;
+  }
+  .fixed-top {
+    padding: 0 !important;
+  }
+
+  .form-container {
+    width: 100%;
+    max-width: 400px;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+    position: relative;
+    bottom: 3rem;
+  }
+
+  .form-title {
+    font-size: 24px;
+    font-weight: bold;
+    color: #333;
+    text-align: center;
+    margin-bottom: 20px;
+  }
+
+  .form-control:focus {
+    box-shadow: none;
+    border-color: #007bff;
+  }
+
+  .btn-login {
+    width: 100%;
+    background-color: rebeccapurple;
+    color: #fff;
+    transition: background-color 0.3s ease;
+  }
+
+  .btn-login:hover {
+    background-color: #8a2be2;
+  }
+
+  .forgot-password a {
+    color: #007bff;
+    font-size: 0.9rem;
+  }
+  @media (max-width: 500px) {
+  }
+</style>
+
+<body class="body">
+  <div class="form-container">
+    <h3 class="form-title">Login</h3>
+    <form action="/login" method="POST">
+      <div class="form-group">
+        <label for="username">Username</label>
+        <input
+          type="text"
+          class="form-control"
+          id="username"
+          name="username"
+          required
+        />
+      </div>
+      <div class="form-group">
+        <label for="password">Password</label>
+        <input
+          type="password"
+          class="form-control"
+          id="password"
+          name="password"
+          required
+        />
+      </div>
+     
+      <div>Don't have an account? <a href="/register">sign up</a> 
+         
+     </div>
+     <br>
+      <button type="submit" class="btn btn-login">Login</button>
+    </form>
+  </div>
+
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.2/dist/umd/popper.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>

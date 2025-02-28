@@ -1,0 +1,113 @@
+<% layout('/layouts/boilerplate') %>
+<style>
+  .add-book {
+    margin-top: 3rem !important;
+  }
+  .bg {
+    border: 1px solid rgb(45, 45, 45);
+    transition: none !important;
+  }
+  .bg::placeholder {
+    color: black;
+  }
+  .bg:focus {
+    box-shadow: 0 0 1px 1px rebeccapurple;
+    border: 1px solid rebeccapurple;
+  }
+  h1 {
+    color: black;
+  }
+</style>
+
+<body>
+  <div class="row mt-3 add-book">
+    <div class="col-8 offset-2">
+      <h1>Add New Book</h1>
+      <form
+        action="/books/add"
+        method="post"
+        enctype="multipart/form-data"
+        novalidate
+        class="needs-validation"
+      >
+        <div class="mb-3">
+          <label for="title" class="form-label">Title</label>
+          <input
+            type="text"
+            name="title"
+            placeholder="Enter Book Title"
+            class="form-control bg"
+            required
+          />
+          <div class="invalid-feedback">Title is required</div>
+        </div>
+        <div class="mb-3">
+          <label for="books" class="form-label">Book Count</label>
+          <input
+            type="number"
+            name="books"
+            placeholder="Enter Book Count"
+            class="form-control bg"
+            min="0"
+            required
+          />
+          <div class="invalid-feedback">
+            Book count is required and cannot be negative
+          </div>
+        </div>
+        <div class="mb-3">
+          <label for="author" class="form-label">Author</label>
+          <input
+            type="text"
+            name="author"
+            placeholder="Enter Author Name"
+            class="form-control bg"
+            required
+          />
+          <div class="invalid-feedback">Author name is required</div>
+        </div>
+
+        <div class="mb-3">
+          <label for="location" class="form-label">Location</label>
+          <input
+            type="text"
+            name="location"
+            placeholder="Enter Book Location"
+            class="form-control bg"
+          />
+        </div>
+
+        <div class="mb-3">
+          <label for="description" class="form-label">Description</label>
+          <textarea
+            name="description"
+            placeholder="Enter Book Description"
+            class="form-control bg"
+            required
+          ></textarea>
+          <div class="invalid-feedback">Description is required</div>
+        </div>
+        <!-- Info Section -->
+        <div class="mb-3">
+          <label for="info" class="form-label">Info</label>
+          <textarea
+            name="info"
+            placeholder="Enter Additional Info"
+            class="form-control bg"
+            required
+          ></textarea>
+          <div class="invalid-feedback">Additional info is required</div>
+        </div>
+
+        <div class="mb-3">
+          <label for="image" class="form-label">Image</label>
+          <input type="file" name="image" class="form-control bg" required />
+          <div class="invalid-feedback">Image is required</div>
+        </div>
+        <div>
+          <button type="submit" class="btn btn-dark mt-3">Add Book</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</body>

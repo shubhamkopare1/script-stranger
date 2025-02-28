@@ -1,0 +1,174 @@
+<style>
+  .navbar {
+    transition: background-color 0.3s;
+  }
+
+  .navbar:hover {
+    background-color: rebeccapurple;
+  }
+
+  .nav-link {
+    transition: color 0.3s;
+  }
+  .offcanvas-end {
+    top: 0;
+    right: 0;
+    width: 300px !important;
+    border-left: 1px solid rgba(0, 0, 0, 0.2);
+    transform: translateX(100%);
+  }
+
+  .dropdown-menu {
+    background-color: white;
+    color: black;
+  }
+  .nav-link {
+    color: white !important;
+  }
+  .dropdown-item:hover {
+    background-color: white;
+  }
+
+  .offcanvas {
+    background-color: rebeccapurple;
+  }
+
+  .btn-close {
+    filter: invert(1);
+  }
+</style>
+<nav class="navbar navbar-expand-lg navbar-dark fixed-top">
+  <div class="container-fluid">
+    <!-- <a class="navbar-brand" href="#"
+      ><span class="tt">T</span><span class="g">G</span><span class="p">P</span
+      ><span class="c">C</span><span class="e">E</span
+      ><span class="t">T </span></a
+    > -->
+
+    <button
+      class="navbar-toggler"
+      type="button"
+      data-bs-toggle="offcanvas"
+      data-bs-target="#offcanvasNavbar"
+      aria-controls="offcanvasNavbar"
+      aria-label="Toggle navigation"
+    >
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div
+      class="collapse navbar-collapse d-lg-flex justify-content-lg-between"
+      id="navbarSupportedContent"
+    >
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <li class="nav-item">
+          <a class="nav-link text-white" href="/books">Home</a>
+        </li>
+
+        <% if (!currentUser) { %>
+        <li class="nav-item">
+          <a class="nav-link text-white" href="/register">Register</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link text-white" href="/login">Login</a>
+        </li>
+        <% } else { %> <% if (currentUser.role === 'admin') { %>
+        <li class="nav-item">
+          <a class="nav-link text-white" href="/bookIssue">BookIssue</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link text-white" href="/addbooks">AddBooks</a>
+        </li>
+        <% } %>
+        <li class="nav-item dropdown">
+          <a
+            class="nav-link dropdown-toggle text-white"
+            href="#"
+            id="navbarDropdown"
+            role="button"
+            data-bs-toggle="dropdown"
+            aria-expanded="false"
+          >
+            <%= currentUser.username || 'Profile' %>
+          </a>
+          <ul
+            class="dropdown-menu dropdown-menu-end"
+            aria-labelledby="navbarDropdown"
+          >
+            <li><a class="dropdown-item" href="/profile">View Profile</a></li>
+
+            <li><hr class="dropdown-divider" /></li>
+            <li><a class="dropdown-item" href="/logout">Logout</a></li>
+          </ul>
+        </li>
+        <% } %>
+      </ul>
+    </div>
+
+    <!-- Offcanvas Sidebar (only for mobile screens) -->
+    <div
+      class="offcanvas offcanvas-end"
+      tabindex="-1"
+      id="offcanvasNavbar"
+      aria-labelledby="offcanvasNavbarLabel"
+    >
+      <div class="offcanvas-header">
+        <h5 class="offcanvas-title" id="offcanvasNavbarLabel">Menu</h5>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="offcanvas"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div class="offcanvas-body">
+        <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="/books"
+              >Home</a
+            >
+          </li>
+          <% if (!currentUser) { %>
+          <li class="nav-item">
+            <a class="nav-link" href="/register">Register</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link text-white" href="/login">Login</a>
+          </li>
+          <% } else { %> <% if (currentUser.role === 'admin') { %>
+          <li class="nav-item">
+            <a class="nav-link text-white" href="/bookIssue">BookIssue</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link text-white" href="/addbooks">AddBooks</a>
+          </li>
+          <% } %>
+          <li class="nav-item dropdown">
+            <a
+              class="nav-link dropdown-toggle text-primary"
+              href="#"
+              id="navbarDropdown"
+              role="button"
+              data-bs-toggle="dropdown"
+              aria-expanded="false"
+            >
+              <%= currentUser.username || 'Profile' %>
+            </a>
+            <ul
+              class="dropdown-menu dropdown-menu-end"
+              aria-labelledby="navbarDropdown"
+            >
+              <li><a class="dropdown-item" href="/profile">View Profile</a></li>
+
+              <li><hr class="dropdown-divider" /></li>
+              <li><a class="dropdown-item" href="/logout">Logout</a></li>
+            </ul>
+          </li>
+          <% } %>
+        </ul>
+      </div>
+    </div>
+  </div>
+</nav>
+<br />
+<br />

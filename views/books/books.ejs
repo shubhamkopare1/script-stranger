@@ -1,0 +1,231 @@
+<% layout('/layouts/boilerplate') %>
+<style>
+   
+    body {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin: 0;
+        padding: 0;
+        font-family: Arial, sans-serif;
+        min-height: 100vh;
+    }
+    .container-fluid {
+        width: 100%;
+    }
+    .main-container {
+        display: flex;
+        justify-content: center;
+        padding: 20px;
+        background-color: white;
+        width: 100%;
+        max-width: 800px;
+        border-radius: 8px;
+        margin: 20px;
+    }
+    .content {
+        width: 100%;
+    }
+    .header {
+        text-align: center;
+        font-size: 2rem;
+        color: #333;
+        margin-bottom: 20px;
+    }
+    .search-container {
+        display: flex;
+        justify-content: center;
+        margin-bottom: 20px;
+    }
+    .search-input {
+        padding: 10px;
+        font-size: 1rem;
+        border: 1px solid rebeccapurple;
+        border-radius: 5px;
+        width: 60%;
+        max-width: 400px;
+        margin-right: 10px;
+    }
+    .search-button {
+        padding: 10px 15px;
+        font-size: 1rem;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        background-color: rebeccapurple;
+        color: white;
+        
+    }
+    .search-button:hover {
+        background-color: indigo;
+    }
+    .book-item {
+        display: flex;
+        align-items: center;
+        gap: 3rem;
+        margin-bottom: 20px;
+        border-bottom: 1px solid #e0e0e0;
+        padding-bottom: 20px;
+    }
+    .book-item:last-child {
+        border-bottom: none;
+    }
+    .book-img {
+        width: 100px;
+        height: auto;
+        border-radius: 4px;
+        object-fit: cover;
+    }
+    .book-details {
+        flex: 1;
+    }
+    .title {
+        font-size: 1.4rem;
+        color: #333;
+        margin: 0 0 5px 0;
+    }
+    .description {
+        font-size: 1rem;
+        color: #666;
+        margin: 5px 0;
+    }
+    .availability {
+        font-size: 1rem;
+        color: #333;
+        margin: 10px 0;
+    }
+    .button-group {
+        display: flex;
+        gap: 10px;
+        margin-top: 10px;
+    }
+    .btn1,
+    .btn-danger {
+        padding: 5px 15px;
+        font-size: 0.9rem;
+        border-radius: 5px;
+        cursor: pointer;
+        color: white;
+        background-color: rebeccapurple;
+        border: none;
+        transition: background-color 0.3s;
+    }
+    .btn-danger {
+        background-color: crimson;
+    }
+    .btn1:hover {
+        background-color: indigo;
+    }
+    .btn-danger:hover {
+        background-color: darkred;
+    }
+.input:focus {
+    border-color: rebeccapurple;
+    box-shadow: 0 0 5px rgba(38, 132, 255, 0.5);
+    outline: none;
+  }
+
+   
+    @media (max-width: 768px) {
+        .main-container {
+            padding: 10px;
+            margin: 10px;
+        }
+        .book-item {
+            gap: 1rem;
+            flex-direction: column;
+            align-items: flex-start;
+        }
+        .book-img {
+            width: 80px;
+            margin-bottom: 10px;
+        }
+        .title {
+            font-size: 1.2rem;
+        }
+        .description {
+            font-size: 0.9rem;
+        }
+        .btn1,
+        .btn-danger {
+            font-size: 0.8rem;
+            padding: 5px 10px;
+        }
+        .input:focus {
+    border-color: rebeccapurple !important;
+    box-shadow: 0 0 5px rgba(38, 132, 255, 0.5) !important;
+    outline: none;
+  }
+    }
+    @media (max-width: 480px) {
+        .header {
+            font-size: 1.5rem;
+        }
+        .book-item {
+            gap: 1rem;
+        }
+        .title {
+            font-size: 1rem;
+        }
+        .description,
+        .availability {
+            font-size: 0.8rem;
+        }
+        .alert{
+            position: relative;
+            bottom: 1rem;
+        }
+        .input:focus {
+    border-color: rebeccapurple !important;
+    box-shadow: 0 0 5px rgba(38, 132, 255, 0.5) !important;
+    outline: none;
+  }
+    }
+</style>
+
+<body>
+    <div class="main-container">
+        <div class="content">
+           
+            <!-- Search Bar -->
+            <div class="search-container">
+                <form action="/books" method="GET" style="margin-bottom: 20px; display: flex;">
+                    <input class="input" type="text" name="title" placeholder="Search by title" style="padding: 8px; width: calc(100% - 20px); border-radius: 5px; border: 1px solid rebeccapurple;">
+                    <button type="submit" class="btn1" style="padding: 8px 15px; margin-left: 10px; border: none; border-radius: 5px; background-color: rebeccapurple; color: white;">Search</button>
+                </form>
+            </div>
+
+            <% for (book of allData) { %>
+            <div class="book-item">
+                <img src="<%= book.image %>" alt="<%= book.title %>" class="book-img">
+                <div class="book-details">
+                    <h2 class="title"><%= book.title[0] %> <%= book.title[1] %></h2>
+                    <p class="description"><%= book.description %></p>
+                    <% if (book.books <= 0) { %>
+                        <p class="availability" >Book Not Available</p>
+                    <% } else { %>
+                        <p class="availability"><%= book.books %> available</p>
+                    <% } %>
+                    
+                    <div class="button-group">
+                        <% if (book.books > 0) { %>
+                        <form action="/books/<%= book._id %>" method="GET">
+                            <button class="btn1">View</button>
+                        </form>
+                        <% } %>
+                        <% if (user && user.role === 'admin') { %>
+                        <form action="/books/<%= book._id %>/edit" method="GET">
+                            <button class="btn1">Edit</button>
+                        </form>
+                        <form action="/books/<%= book._id %>?_method=DELETE" method="POST">
+                            <button class="btn-danger" type="submit">Delete</button>
+                        </form>
+                        <% } %>
+                    </div>
+                </div>
+            </div>
+            <% } %>
+        </div>
+    </div>
+</body>
+</html>

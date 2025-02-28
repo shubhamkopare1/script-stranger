@@ -1,0 +1,230 @@
+<% layout("/layouts/boilerplate") -%>
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+  }
+
+  .profile-container {
+    max-width: 800px;
+    margin: 50px auto;
+    background-color: white;
+    border-radius: 10px;
+    padding: 30px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  }
+
+  .search-container {
+    max-width: 800px;
+    margin: 20px auto;
+    display: flex;
+    justify-content: center;
+    padding: 10px;
+  }
+
+  .search-input {
+    width: 100%;
+    max-width: 300px;
+    padding: 8px;
+    font-size: 16px;
+    border-radius: 5px;
+    border: 1px solid #ddd;
+    box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.1);
+  }
+
+  .table-container {
+    max-width: 100%;
+    overflow-x: auto;
+    margin: 20px auto;
+    background-color: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+
+  .table {
+    width: 100%;
+    border-collapse: collapse;
+    min-width: 600px;
+  }
+
+  .table th,
+  .table td {
+    padding: 12px;
+    font-size: 14px;
+    border-bottom: 1px solid #ddd;
+    text-align: center;
+  }
+
+  .table thead {
+    background-color: rebeccapurple;
+    color: white;
+  }
+
+  .btn1 {
+    background-color: rebeccapurple;
+    border-color: rebeccapurple;
+    border-radius: 5px;
+    color: white;
+    padding: 5px 10px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+
+  .btn1:hover {
+    background-color: indigo;
+  }
+
+  @media (max-width: 768px) {
+    .table-container {
+      padding: 10px;
+    }
+
+    .table th,
+    .table td {
+      padding: 8px;
+      font-size: 12px;
+    }
+
+    .btn1 {
+      font-size: 0.8rem;
+      padding: 5px 8px;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .profile-header {
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .profile-header h2 {
+      font-size: 18px;
+      text-align: center;
+    }
+
+    .table-container {
+      padding: 5px;
+    }
+
+    .table {
+      font-size: 0.9rem;
+      min-width: 100%;
+    }
+
+    .table th,
+    .table td {
+      font-size: 10px;
+      padding: 5px;
+    }
+
+    .btn1 {
+      font-size: 0.7rem;
+      padding: 3px 5px;
+    }
+  }
+</style>
+
+<div class="search-container">
+  <input
+    type="text"
+    id="searchInput"
+    class="search-input"
+    placeholder="Search by Student ID"
+    onkeyup="filterTable()"
+  />
+</div>
+
+<div class="table-container">
+  <% if (bookingData.length > 0) { %>
+  <table class="table table-striped" id="bookingTable">
+    <thead>
+      <tr>
+        <th>Sr No</th>
+        <th>Student ID</th>
+        <th>Student Name</th>
+        <th>Course</th>
+        <th>Contact No</th>
+        <th>Book Title</th>
+        <th>Issue Date</th>
+        <th>Due Date</th>
+        <th>Submitted</th>
+        <th>Charges</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% let count = 0; %> <% bookingData.forEach(booking => { const student =
+      studentDatas.find(studentData => studentData.studentId ===
+      booking.studentId); %>
+      <tr>
+        <td><%= ++count %></td>
+        <td><%= student ? student.studentId : 'N/A' %></td>
+        <td><%= student ? student.name : 'N/A' %></td>
+        <td><%= student ? student.branch : 'N/A' %></td>
+        <td><%= student ? student.contact : 'N/A' %></td>
+        <td><%= booking.book %></td>
+        <td><%= booking.issueDate.toDateString() %></td>
+        <td><%= booking.dueDate.toDateString() %></td>
+        <td>
+          <% if (student) { %>
+          <form
+            action="/issueBook/<%= student.studentId %>?_method=DELETE"
+            method="POST"
+          >
+            <button class="btn1" type="submit">Return Book</button>
+          </form>
+          <% } else { %>
+          <span>N/A</span>
+          <% } %>
+        </td>
+        <td class="charge"></td>
+        <!-- Initially set to 0 -->
+      </tr>
+      <% }) %>
+    </tbody>
+  </table>
+  <% } else { %>
+  <p>No booking data available.</p>
+  <% } %>
+</div>
+
+<script>
+  function calculateCharges() {
+    const rows = document.querySelectorAll("#bookingTable tbody tr");
+
+    rows.forEach((row) => {
+      const issueDate = new Date(row.getAttribute("data-issue-date"));
+      const dueDate = new Date(row.getAttribute("data-due-date"));
+      const currentDate = new Date();
+      let charges = 0;
+
+      if (currentDate > dueDate) {
+        const daysOverdue = Math.ceil(
+          (currentDate - dueDate) / (1000 * 60 * 60 * 24)
+        );
+        charges = daysOverdue;
+      }
+
+      // Update the charges cell
+      row.querySelector(".charge").textContent = `₹${charges}`;
+    });
+  }
+
+  function filterTable() {
+    const searchInput = document
+      .getElementById("searchInput")
+      .value.toUpperCase();
+    const table = document.getElementById("bookingTable");
+    const rows = table.getElementsByTagName("tr");
+
+    for (let i = 1; i < rows.length; i++) {
+      const studentIdCell = rows[i].getElementsByTagName("td")[1];
+      if (studentIdCell) {
+        const studentId = studentIdCell.textContent || studentIdCell.innerText;
+        rows[i].style.display =
+          studentId.toUpperCase().indexOf(searchInput) > -1 ? "" : "none";
+      }
+    }
+  }
+</script>

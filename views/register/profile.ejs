@@ -1,0 +1,178 @@
+<% layout("/layouts/boilerplate") -%>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        background-color: #f4f4f4;
+    }
+
+    .profile-container {
+        max-width: 800px;
+        margin: 50px auto;
+        background-color: white;
+        border-radius: 10px;
+        padding: 30px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+    .profile-header {
+        display: flex;
+        align-items: center;
+        margin-bottom: 20px;
+    }
+    .profile-header img {
+        width: 120px;
+        height: 120px;
+        border-radius: 50%;
+        margin-right: 20px;
+    }
+    .profile-header h2 {
+        font-size: 26px;
+        margin: 0;
+    }
+    .profile-info {
+        margin-top: 30px;
+    }
+    .profile-info label {
+        font-weight: bold;
+        display: block;
+        margin-bottom: 5px;
+    }
+    .profile-info input,
+    .profile-info textarea {
+        width: 100%;
+        padding: 10px;
+        margin-bottom: 15px;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        font-size: 16px;
+    }
+    .profile-info textarea {
+        height: 100px;
+    }
+    .profile-info button {
+        padding: 10px 20px;
+        background-color: #007bff;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        font-size: 16px;
+    }
+    .profile-info button:hover {
+        background-color: #0056b3;
+    }
+    .btn-danger {
+        border-radius: 5px; 
+        padding: 5px 10px;
+    }
+    h2, h4, h3 {
+        color: black;
+    }
+    .search-container {
+        margin-bottom: 20px;
+    }
+    .search-container input {
+        width: 100%;
+        padding: 10px;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        font-size: 16px;
+    }
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 20px;
+    }
+    th, td {
+        text-align: left;
+        padding: 12px;  
+    }
+    th {
+        background-color: rebeccapurple;
+        color: white;
+    }
+   .sec{
+    padding: 2rem;
+   }
+    
+    @media (max-width: 500px) {
+        td, th {
+            font-size: .45rem;
+        }
+        .sec{
+            padding: 0;
+        }
+        
+        h2 {
+            font-size: 18px;
+        }
+
+        h4 {
+            font-size: 15px;
+        }
+
+        .btn-danger {
+            font-size: .5rem;
+            padding: 2px;
+        }
+
+        .profile-header h2, 
+        .profile-header h4 {
+            font-size: 10px;
+            margin: 0;
+        }
+    }
+</style>
+</head>
+<body>
+
+<div class="profile-container">
+   
+    <div class="profile-header">
+        <img src="https://cdn-icons-png.freepik.com/512/4021/4021488.png" alt="Profile Picture" id="profileImage">
+        <div>
+            <h2 id="profileName"><%= user.username %></h2>
+            <h4><%= user.email %></h4>
+        </div>
+    </div>
+</div>
+
+<div class="sec">
+    <h3>Issue Book</h3>
+    <table class="table table-striped" id="bookingTable">
+        <thead>
+            <tr style="background-color: rebeccapurple;">
+                <th>Sr No</th>
+                <th>Student ID</th>
+                <th>Name</th>
+                <th>Contact</th>
+                <th>Branch</th>
+                <th>Book Name</th>
+                <th>Issue Date</th>
+                <th>Due Date</th>
+            </tr>
+        </thead>
+        <tbody>
+            <% let count = 0; %>
+            <% userBookings.forEach(booking => { %>
+                <% const studentInfo = studentDataMap[booking.studentId]; %>
+                <% if (studentInfo) { %>
+                    <tr>
+                        <td> <%= ++count %></td>
+                        <td><%= studentInfo.studentId %></td>
+                        <td><%= studentInfo.name %></td>
+                        <td><%= studentInfo.contact %></td>
+                        <td><%= studentInfo.branch %></td>
+                        <td> <%= booking.book %> </td>
+                        <td> <%= booking.issueDate.toDateString() %> </td>
+                        <td> <%= booking.dueDate.toDateString() %> </td>
+                    </tr>
+                <% } %>
+            <% }) %>
+        </tbody>
+    </table>
+</div>
+
+</body>
+</html>

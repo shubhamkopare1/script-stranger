@@ -1,0 +1,112 @@
+<% layout("/layouts/boilerplate") -%>
+
+<!-- Leaflet CSS -->
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+
+<style>
+  .issue {
+    margin-top: 5rem !important;
+  }
+  .bg {
+    border: 1px solid rgb(45, 45, 45);
+    transition: none !important;
+  }
+  .bg::placeholder {
+    color: black;
+  }
+  .bg:focus {
+    transition: none !important;
+    box-shadow: 0 0 1px 1px rebeccapurple;
+    border: 1px solid rebeccapurple;
+  }
+  #map {
+    height: 300px;
+    width: 100%;
+    margin-top: 1rem;
+    border-radius: 5px;
+  }
+</style>
+
+<body>
+  <div class="row mt-3 issue">
+    <div class="col-8 offset-2">
+      <h1 style="color: black">Edit Book Location</h1>
+      <!-- Edit Location Form -->
+      <form method="POST" action="/books/book/update-location/<%= bookdata._id %>" class="needs-validation" novalidate>
+        
+        <!-- 📌 Location Field (User can manually enter) -->
+        <div class="mb-3">
+          <label for="location" class="form-label">Location:</label>
+          <input type="text" id="location" name="location" placeholder="Enter location manually" 
+                 value="<%= bookdata.location || '' %>" class="form-control bg" required />
+        </div>
+
+        <!-- 📌 Latitude & Longitude Fields -->
+        <div class="mb-3">
+          <label for="latitude" class="form-label">Latitude:</label>
+          <input type="text" id="latitude" name="latitude" value="<%= bookdata.latitude || '' %>" 
+                 class="form-control bg" required />
+          
+          <label for="longitude" class="form-label">Longitude:</label>
+          <input type="text" id="longitude" name="longitude" value="<%= bookdata.longitude || '' %>" 
+                 class="form-control bg" required />
+        </div>
+
+        <!-- 📌 Map for Selecting Location -->
+        <div class="mb-3">
+          <label class="form-label">Pick Location:</label>
+          <div id="map"></div>
+        </div>
+
+        <!-- 📌 Use My Location Button -->
+        <button type="button" class="btn btn-dark mt-3" onclick="getUserLocation()">Use My Location</button>
+
+        <button type="submit" class="btn btn-dark mt-3">return book</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Leaflet.js -->
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  
+  <script>
+    var defaultLat = <%= bookdata.latitude || 28.6139 %>;
+    var defaultLng = <%= bookdata.longitude || 77.2090 %>;
+
+    var map = L.map('map').setView([defaultLat, defaultLng], 12);
+    
+    // OpenStreetMap Tiles
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      attribution: '&copy; OpenStreetMap contributors'
+    }).addTo(map);
+
+    var marker = L.marker([defaultLat, defaultLng], { draggable: true }).addTo(map);
+
+    // 📌 Update only latitude & longitude when marker is dragged
+    marker.on("dragend", function (event) {
+      var position = marker.getLatLng();
+      document.getElementById("latitude").value = position.lat;
+      document.getElementById("longitude").value = position.lng;
+    });
+
+    // 📌 Get User's Current Location (DOES NOT UPDATE LOCATION FIELD)
+    function getUserLocation() {
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(function (position) {
+          var userLat = position.coords.latitude;
+          var userLng = position.coords.longitude;
+
+          // 📌 Update latitude & longitude input fields
+          document.getElementById("latitude").value = userLat;
+          document.getElementById("longitude").value = userLng;
+
+          // 📌 Move marker to user location
+          map.setView([userLat, userLng], 14);
+          marker.setLatLng([userLat, userLng]);
+        });
+      } else {
+        alert("Geolocation is not supported by this browser.");
+      }
+    }
+  </script>
+</body>

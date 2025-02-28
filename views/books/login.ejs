@@ -1,0 +1,79 @@
+<% layout('/layouts/boilerplate') %>
+<style>
+    .main{
+    display: flex;
+    justify-content: center;
+    height: 95vh;
+    gap: 3rem;
+    align-items: center;
+    
+}
+body{
+    background-color: black;
+    color: white;
+}
+.data{
+    width: 43rem;
+}
+img{
+    height: 18rem;
+   margin-bottom: .5rem;
+}
+.p{
+    width: 14rem;
+}
+.imgdata{
+    display: flex;
+width: 17rem;
+flex-direction: column;
+align-items: center;
+margin-top:2.2rem;
+height: 28rem;
+
+}
+spam{
+    font-size: 1.3rem;
+}
+.img{
+    height: 3rem;
+    width: 3rem;
+    border-radius: 50%;
+    margin-left: .5rem;
+   
+}
+.logo{
+    display: flex;
+gap: 1rem;
+align-items: center;
+}
+button{
+    color: white;
+background: rgb(229, 9, 20);
+border: 1px solid red;
+height: 2rem;
+}
+.btn{
+    display: flex;
+    gap: 1rem;
+}  
+</style>
+<body>
+    <div class="login-container">
+        <h1>Login</h1>
+        <form id="loginForm">
+            <div class="form-group">
+                <label for="username">Username:</label>
+                <input type="text" id="username" name="username" required>
+            </div>
+            <div class="form-group">
+                <label for="password">Password:</label>
+                <input type="password" id="password" name="password" required>
+            </div>
+            <button type="submit">Login</button>
+        </form>
+    
+        <div id="error-message"></div>
+    </div>
+    <script src="scripts.js"></script>
+</body>
+

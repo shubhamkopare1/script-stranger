@@ -53,8 +53,19 @@ router.post('/books/add', upload.single('image'), ensureRole('admin'), isLoggedI
   }
 });
 
-
-
+router.get("/books/returnss/:id", async (req, res) => {
+  try {
+    const bookId = req.params.id;
+    const book = await Book.findById(bookId);
+    if (!book) {
+      return res.status(404).send("Book not found");
+    }
+    res.render("books/bookReturn", { bookdata: book });
+  } catch (error) {
+    console.error(error);
+    res.status(500).send("Error loading return book page");
+  }
+});
 // GET /books
 router.get('/books', asyncWrap(async (req, res) => {
   let queryTitle = req.query.title;

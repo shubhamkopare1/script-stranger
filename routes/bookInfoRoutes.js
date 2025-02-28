@@ -53,11 +53,11 @@ router.post(
   isLoggedIn,
   asyncWrap(async (req, res) => {
     const id = req.params.id;
-    const { title, author, info, location } = req.body;
+    const { title, author, info, location ,latitude, longitude } = req.body;
     if (!mongoose.isValidObjectId(id)) {
       return res.status(400).send("Invalid book ID format");
     }
-    await Book.findByIdAndUpdate(id, { title, author, info, location });
+    await Book.findByIdAndUpdate(id, { title, author, info, location ,latitude, longitude});
     req.flash("success", "Book data edited successfully");
     res.redirect(`/books/${id}`);
   })
