@@ -37,7 +37,7 @@ const sendIssueEmail = async (email, studentName, bookTitle, dueDate) => {
   }
 };
 
-// ✅ Function to Send Return Email
+
 const sendReturnEmail = async (email, studentName, bookTitle) => {
   if (!email) {
     console.error("⚠️ No recipient email provided, skipping return email.");
@@ -62,7 +62,7 @@ const sendReturnEmail = async (email, studentName, bookTitle) => {
   }
 };
 
-// ✅ Route to Display Book Issue Page
+
 router.get(
   "/books/issue/:id",
   isLoggedIn,
