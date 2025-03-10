@@ -1,0 +1,85 @@
+<% layout('/layouts/boilerplate') %>
+
+<style>
+  .add-student {
+    margin-top: 3rem !important;
+  }
+  .bg {
+    border: 1px solid rgb(45, 45, 45);
+    transition: none !important;
+  }
+  .bg::placeholder {
+    color: black;
+  }
+  .bg:focus {
+    box-shadow: 0 0 1px 1px rebeccapurple;
+    border: 1px solid rebeccapurple;
+  }
+  h1 {
+    color: black;
+  }
+</style>
+
+<body>
+  <div class="row mt-3 add-student">
+    <div class="col-8 offset-2">
+      <h1>Add New Student</h1>
+
+      <!-- ✅ CSV Upload Form -->
+      <form action="/students/uploadCsv" method="post" enctype="multipart/form-data" class="mb-4">
+        <div class="mb-3">
+          <label for="csvFile" class="form-label">Upload CSV File</label>
+          <input type="file" name="csvFile" class="form-control bg" accept=".csv"/>
+          <div class="invalid-feedback">CSV file is required</div>
+        </div>
+        <button type="submit" class="btn btn-success">Upload CSV</button>
+      </form>
+
+      <h2>OR Add Student Manually</h2>
+
+      <!-- ✅ Manual Student Entry Form -->
+      <form action="/students/add" method="post" novalidate class="needs-validation">
+
+        <div class="mb-3">
+          <label for="studentId" class="form-label">Student ID</label>
+          <input type="text" name="studentId" placeholder="Enter Student ID" class="form-control bg"  />
+          <div class="invalid-feedback">Student ID is required</div>
+        </div>
+
+        <div class="mb-3">
+          <label for="name" class="form-label">Student Name</label>
+          <input type="text" name="name" placeholder="Enter Student Name" class="form-control bg" />
+          <div class="invalid-feedback">Student name is required</div>
+        </div>
+
+        <div class="mb-3">
+          <label for="branch" class="form-label">Branch</label>
+          <input type="text" name="branch" placeholder="Enter Branch" class="form-control bg"/>
+          <div class="invalid-feedback">Branch is required</div>
+        </div>
+
+        <div class="mb-3">
+          <label for="contact" class="form-label">Contact</label>
+          <input type="text" name="contact" placeholder="Enter Contact Number" class="form-control bg"/>
+          <div class="invalid-feedback">Contact number is required</div>
+        </div>
+
+        <div class="mb-3">
+          <label for="college" class="form-label">College</label>
+          <input type="text" name="college" placeholder="Enter College Name" class="form-control bg" required />
+          <div class="invalid-feedback">College name is required</div>
+        </div>
+
+        <div class="mb-3">
+          <label for="email" class="form-label">Email</label>
+          <input type="email" name="email" placeholder="Enter Email" class="form-control bg" required />
+          <div class="invalid-feedback">Email is required</div>
+        </div>
+
+        <div>
+          <button type="submit" class="btn btn-dark mt-3">Add Student</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</body>

@@ -1,0 +1,75 @@
+<% layout('layouts/boilerplate') %>  
+    <title>Verify OTP</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .otp-container {
+            background: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            max-width: 400px;
+            width: 100%;
+        }
+
+        h2 {
+            margin-bottom: 10px;
+        }
+
+        .otp-input {
+            width: 80%;
+            padding: 10px;
+            font-size: 18px;
+            text-align: center;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            margin: 10px 0;
+        }
+
+        .btn-submit {
+            width: 85%;
+            padding: 10px;
+            background: #6a0dad;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 18px;
+        }
+
+        .btn-submit:hover {
+            background: #6a0dad;
+        }
+
+        .error-message {
+            color: red;
+            font-size: 14px;
+        }
+       
+    </style>
+</head>
+<body>
+
+    <div class="otp-container">
+        <h2 style="color: black;" >🔐 Enter OTP</h2>
+        <p style="color: black;"> We have sent an OTP to <b><%= email %></b>. Please enter it below:</p>
+
+        
+
+        <form action="/books/verifyOtp/<%= bookId %>" method="POST">
+            <input type="hidden" name="email" value="<%= email %>">
+            <input type="text" class="otp-input" name="enteredOtp" required placeholder="Enter 6-digit OTP" maxlength="6">
+            <button type="submit" class="btn-submit">Verify OTP</button>
+        </form>
+    </div>
+
+</body>
+</html>

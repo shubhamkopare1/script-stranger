@@ -15,11 +15,15 @@ let booksData = new Schema({
   location: {
     type: String,  // Block Name (Example: "Block A")
   },
-  latitude: {
+  rackNumber: {
     type: Number,
     // required: true, // Ensure every book has a latitude
   },
-  longitude: {
+  shelfNumber: {
+    type: Number,
+    // required: true, // Ensure every book has a longitude
+  },
+  blockNumber: {
     type: Number,
     // required: true, // Ensure every book has a longitude
   },

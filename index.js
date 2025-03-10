@@ -12,6 +12,8 @@ const bookRoutes = require("./routes/booksRoute");
 const issueRoutes = require("./routes/bookIssueRoutes");
 const bookInfoRoutes = require("./routes/bookInfoRoutes");
 const profileRoutes = require("./routes/profileRoutes");
+const books = require("./routes/books");
+const studentData = require("./routes/studentData");
 
 const ExpressError = require("./utils/expressError.js");
 const methodOverride = require("method-override");
@@ -44,7 +46,7 @@ app.use((req, res, next) => {
 app.listen(8080, () => {
   console.log("server started");
 });
-
+// app.use(express.urlencoded({ extended: true }))
 app.use(express.static(path.join(__dirname, "public")));
 app.set("view engine", "ejs");
 app.engine("ejs", ejsMate);
@@ -73,6 +75,8 @@ app.use("/", bookRoutes);
 app.use("/", issueRoutes);
 app.use("/books", bookInfoRoutes);
 app.use("/profile", profileRoutes);
+app.use("/", books);
+app.use("/", studentData);
 
 app.all("*", (req, res, next) => {
   next(new ExpressError(404, "page is not found"));

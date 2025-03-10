@@ -44,9 +44,7 @@ const issueBookSchema = new Schema(
     dueDate: {
       type: Date,
       default: function () {
-        // Set the default due date to 14 days after the issue date
-        const issueDate = this.issueDate || Date.now();
-        return new Date(issueDate.getTime() + 14 * 24 * 60 * 60 * 1000);
+        return new Date(Date.now() + 14 * 24 * 60 * 60 * 1000); // ✅ Fixed error
       },
     },
     returnDate: {

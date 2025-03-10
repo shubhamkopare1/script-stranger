@@ -1,4 +1,5 @@
 <% layout('/layouts/boilerplate') %>
+
 <style>
   .add-book {
     margin-top: 3rem !important;
@@ -23,79 +24,72 @@
   <div class="row mt-3 add-book">
     <div class="col-8 offset-2">
       <h1>Add New Book</h1>
-      <form
-        action="/books/add"
-        method="post"
-        enctype="multipart/form-data"
-        novalidate
-        class="needs-validation"
-      >
+
+      <!-- ✅ CSV Upload Form -->
+      <form action="/books/uploadCsv" method="post" enctype="multipart/form-data" class="mb-4">
+        <div class="mb-3">
+          <label for="csvFile" class="form-label">Upload CSV File</label>
+          <input type="file" name="csvFile" class="form-control bg" accept=".csv" required />
+          <div class="invalid-feedback">CSV file is required</div>
+        </div>
+        <button type="submit" class="btn btn-success">Upload CSV</button>
+      </form>
+
+      <h2>OR Add Book Manually</h2>
+
+      <!-- ✅ Manual Book Entry Form -->
+      <form action="/books/add" method="post" enctype="multipart/form-data" novalidate class="needs-validation">
         <div class="mb-3">
           <label for="title" class="form-label">Title</label>
-          <input
-            type="text"
-            name="title"
-            placeholder="Enter Book Title"
-            class="form-control bg"
-            required
-          />
+          <input type="text" name="title" placeholder="Enter Book Title" class="form-control bg" required />
           <div class="invalid-feedback">Title is required</div>
         </div>
+
         <div class="mb-3">
           <label for="books" class="form-label">Book Count</label>
-          <input
-            type="number"
-            name="books"
-            placeholder="Enter Book Count"
-            class="form-control bg"
-            min="0"
-            required
-          />
-          <div class="invalid-feedback">
-            Book count is required and cannot be negative
-          </div>
+          <input type="number" name="books" placeholder="Enter Book Count" class="form-control bg" min="0" required />
+          <div class="invalid-feedback">Book count is required and cannot be negative</div>
         </div>
+
         <div class="mb-3">
           <label for="author" class="form-label">Author</label>
-          <input
-            type="text"
-            name="author"
-            placeholder="Enter Author Name"
-            class="form-control bg"
-            required
-          />
+          <input type="text" name="author" placeholder="Enter Author Name" class="form-control bg" required />
           <div class="invalid-feedback">Author name is required</div>
         </div>
 
         <div class="mb-3">
-          <label for="location" class="form-label">Location</label>
-          <input
-            type="text"
-            name="location"
-            placeholder="Enter Book Location"
-            class="form-control bg"
-          />
+          <label for="location" class="form-label">Location (Block Name)</label>
+          <input type="text" name="location" placeholder="Enter Book Location (Block A, Block B, etc.)" class="form-control bg" required />
+          <div class="invalid-feedback">Location is required</div>
+        </div>
+
+        <div class="mb-3">
+          <label for="rackNumber" class="form-label">Rack Number</label>
+          <input type="number" name="rackNumber" placeholder="Enter Rack Number " class="form-control bg" required />
+          <div class="invalid-feedback">Rack Number is required</div>
+        </div>
+
+        <div class="mb-3">
+          <label for="shelfNumber" class="form-label">Shelf Number</label>
+          <input type="number" name="shelfNumber" placeholder="Enter Shelf Number" class="form-control bg" required />
+          <div class="invalid-feedback">Shelf Number is required</div>
+        </div>
+
+        <div class="mb-3">
+          <label for="blockNumber" class="form-label">Block Number</label>
+          <input type="number" name="blockNumber" placeholder="Enter Block Number" class="form-control bg" required />
+          <div class="invalid-feedback">Block Number is required</div>
         </div>
 
         <div class="mb-3">
           <label for="description" class="form-label">Description</label>
-          <textarea
-            name="description"
-            placeholder="Enter Book Description"
-            class="form-control bg"
-            required
-          ></textarea>
+          <textarea name="description" placeholder="Enter Book Description" class="form-control bg" required></textarea>
           <div class="invalid-feedback">Description is required</div>
         </div>
-        <!-- Info Section -->
+
         <div class="mb-3">
-          <label for="info" class="form-label">Info</label>
-          <textarea
-            name="info"
-            placeholder="Enter Additional Info"
-            class="form-control bg"
-            required
-          ></textarea>
+          <label for="info" class="form-label">Additional Info</label>
+          <textarea name="info" placeholder="Enter Additional Info" class="form-control bg" required></textarea>
           <div class="invalid-feedback">Additional info is required</div>
         </div>
 
@@ -104,6 +98,7 @@
           <input type="file" name="image" class="form-control bg" required />
           <div class="invalid-feedback">Image is required</div>
         </div>
+
         <div>
           <button type="submit" class="btn btn-dark mt-3">Add Book</button>
         </div>
